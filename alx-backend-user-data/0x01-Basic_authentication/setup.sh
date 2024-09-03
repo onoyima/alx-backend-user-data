@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 import os
 import stat
+import subprocess
 
-# Create directories and files
+# List of dependencies
+dependencies = [
+    "flask",
+    "flask-cors"
+]
+
 directories = [
     "api/v1", 
     "api/v1/auth", 
@@ -128,7 +134,13 @@ def create_structure():
             f.write(content + '\n')  # Ensure each file ends with a newline
         os.chmod(file, stat.S_IRWXU | stat.S_IRGRP | stat.S_IROTH)  # Make the file executable
 
+def install_dependencies():
+    """Install required Python dependencies"""
+    print("Installing dependencies...")
+    subprocess.check_call([os.sys.executable, "-m", "pip", "install"] + dependencies)
+
 if __name__ == "__main__":
     create_structure()
-    print("Project structure created successfully.")
+    install_dependencies()
+    print("Project structure and dependencies setup successfully.")
 
